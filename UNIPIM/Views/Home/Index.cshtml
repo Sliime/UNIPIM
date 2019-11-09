@@ -1,0 +1,75 @@
+﻿@model IEnumerable<UNIPIM.Models.Tarefas>
+
+
+
+<h2 class="text-center">Gerenciador de Tarefas UNIPIM</h2>
+
+<div class="container center-block">
+    <h3 class="h3">Tarefas que você possui no momento: </h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tarefas</th>
+
+                <th scope="col">Data de Entrega</th>
+
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td onclick="mostrarTarefa(@Html.DisplayFor(modelItem => item.codigo))">
+                        <button type="button" class="btn btn-primary btn-lg btn-block">Tarefa:   @Html.DisplayFor(modelItem => item.Nome)</button>
+                        <div class="container ">
+                            <span id="@Html.DisplayFor(modelItem => item.codigo)" style="display:none">
+                                <p class="container" style="padding: 10px; background-color:   #FFFACD;">@Html.DisplayFor(modelItem => item.Tarefa)</p>
+                            </span>
+                        </div>
+
+                    </td>
+
+                    <th scope="row"> @Html.DisplayFor(modelItem => item.Data.Day)/@Html.DisplayFor(modelItem => item.Data.Month)/@Html.DisplayFor(modelItem => item.Data.Year)</th>
+
+                </tr>
+
+            </tbody>
+
+
+        }
+    </table>
+
+    <script>
+        function mostrarTarefa(id) {
+
+            var elToggled = document.getElementById(id);
+
+            if (elToggled.style.display == "none") {
+
+                elToggled.style.display = "block";
+            }
+            else {
+                elToggled.style.display = "none";
+            }
+
+
+
+        }
+    </script>
+
+    <script>
+        function deletarAluno(id) {
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:54828/Home/Delete",
+                data: JSON.stringify({ Id: id }),
+                contentType: "application/json"
+
+
+            });
+        }
+    </script>
+
+</div>
+
